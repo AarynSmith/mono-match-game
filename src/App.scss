@@ -1,92 +1,92 @@
 html {
   background-color: #282c34;
+  color: white;
 }
-
-.centerDot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: green;
-  height: 0.5em;
-  width: 0.5em;
-  border-radius: 50%;
-  z-index: 0;
-}
-.icon-test-container {
-  border: solid 1px aqua;
+footer {
+  padding-top: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .icon-test-title {
-    font-size: large;
-  }
-  .icon-test {
-    font-size: small;
-
-    .icon-test-row {
-      display: flex;
-      flex-direction: row;
+  justify-content: center;
+  .footer-row {
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+    justify-content: center;
+    .fa-heart {
+      color: rgb(221, 0, 0);
+    }
+    .fa-react {
+      color: rgb(0, 186, 248);
+    }
+    a {
+      color: white;
+      text-decoration: underline;
+      & :visited {
+        text-decoration: underline;
+        color: white;
+      }
     }
   }
 }
+
 .App {
   min-height: 100vh;
   font-size: calc(10px + 2vmin);
-  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.App-header {
-  position: relative;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 25vh;
-}
-.card-container {
-  display: flex;
-  width: 90vw;
-  flex-direction: row;
-  justify-content: center;
-  gap: 5px;
-  flex-wrap: wrap;
-  .card {
-    $card-size: 6em;
+  .App-header {
     position: relative;
-    border: solid 2px grey;
-    width: $card-size;
-    height: $card-size;
-    border-radius: 50%;
-    .card-title {
-      position: absolute;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 25vh;
+  }
+  .game-area {
+    display: flex;
+    flex-direction: row;
+    border: solid 1px lightgrey;
+    padding: 1em;
+    margin: 1em;
+    gap: 1em;
+    width: 80vw;
+    height: 50vh;
+    justify-content: center;
+    align-items: center;
+    .card {
+      $size: min(calc(40vw - 0.5em), 50vh);
+      border: solid 1px grey;
+      border-radius: 50%;
+      width: $size;
+      height: $size;
+      position: relative;
+    }
+  }
+  .card-container {
+    display: flex;
+    width: 90vw;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    .card {
+      $card-size: 6em;
+      position: relative;
+      border: solid 2px grey;
+      width: $card-size;
       height: $card-size;
-      margin-top: calc($card-size/2);
-      top: 50%;
-      left: 50%;
-      font-size: small;
-      transform: translate(-50%, -60%);
+      border-radius: 50%;
     }
-    .icon-container {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      > .icon {
-        height: 2em;
-        width: 2em;
-        font-size: 1.2em;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
+  }
+  .icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

@@ -1,14 +1,17 @@
 import "./App.scss";
 import { Card } from "./Card";
+import { BigCard } from "./BigCard";
 import { MonoMatchDeck } from "./Deck";
 import { faIcons } from "./SymbolSets";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { library, dom } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 import { shuffle } from "./utility";
 
-library.add(fas);
+library.add(fas, fab);
+dom.watch();
 
 const colors = [
   "red",
@@ -47,6 +50,10 @@ function App() {
       <header className="App-header">
         <div className="title">Cards</div>
       </header>
+      <div className="game-area">
+        <BigCard icons={deck.deck[0]} />
+        <BigCard icons={deck.deck[1]} />
+      </div>
       <div className="card-container">
         {deck.deck.map((v, i) => {
           return <Card key={i} icons={v} />;

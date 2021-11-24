@@ -51,22 +51,22 @@ const computeDeck = (n: number) => {
   return d;
 };
 
-export class MonoMatchDeck {
-  deck: any[][];
+export class MonoMatchDeck<T> {
+  cards: T[][];
   constructor({
     order,
     symbols,
     shuffle = false,
   }: {
     order: number;
-    symbols: any[];
+    symbols: T[];
     shuffle?: boolean;
   }) {
     primeSieve(order);
     if (!powerOfPrime(order)) throw Error("order must be a power of a prime");
     if (symbols.length < order * order + order + 1)
       throw Error("not enough symbols provided for order");
-    this.deck = computeDeck(order).map((card) => {
+    this.cards = computeDeck(order).map((card) => {
       return card.map((i) => symbols[i]);
     });
     if (shuffle) {
@@ -76,51 +76,9 @@ export class MonoMatchDeck {
   }
 
   shuffleSymbols() {
-    this.deck.forEach((v) => shuffle(v));
+    this.cards.forEach((v) => shuffle(v));
   }
   shuffleDeck() {
-    this.deck = shuffle(this.deck);
+    this.cards = shuffle(this.cards);
   }
 }
-
-// export class Deck {
-//   symbols: any[];
-//   cards: any[];
-
-//   constructor({
-//     numCards,
-//     symbols = ["A", "B", "C"],
-//     // symbols = ["🚀", "🛰", "☄️", "🪐", "🛸"],
-//     shuffle = false,
-//   }: {
-//     numCards: number;
-//     symbols?: any[];
-//     shuffle?: boolean;
-//   }) {
-//     this.symbols = symbols; //, "D", "E", "F", "G"];
-//     this.cards = new Array(numCards).fill(0).map(() => [...this.symbols]);
-//     if (shuffle) this.shuffleSymbols();
-//   }
-
-//   shuffleSymbols() {
-//     this.cards.forEach((v) => {
-//       let cIdx = v.length;
-//       while (cIdx !== 0) {
-//         const rIdx = Math.floor(Math.random() * cIdx);
-//         cIdx--;
-//         [v[cIdx], v[rIdx]] = [v[rIdx], v[cIdx]];
-//       }
-//     });
-//   }
-//   shuffleDeck() {
-//     let cIdx = this.cards.length;
-//     while (cIdx !== 0) {
-//       const rIdx = Math.floor(Math.random() * cIdx);
-//       cIdx--;
-//       [this.cards[cIdx], this.cards[rIdx]] = [
-//         this.cards[rIdx],
-//         this.cards[cIdx],
-//       ];
-//     }
-//   }
-// }

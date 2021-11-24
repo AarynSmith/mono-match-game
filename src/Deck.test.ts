@@ -51,5 +51,5 @@ test("Monomatch", () => {
     order: 3,
     symbols: new Array(13).fill(0).map((_, i) => String.fromCharCode(65 + i)),
   });
-  expect(o2.deck).toHaveLength(13);
+  expect(o2.cards).toHaveLength(13);
 });

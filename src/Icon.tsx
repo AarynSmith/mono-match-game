@@ -3,9 +3,10 @@ type IconProps = {
   number: number;
   total: number;
   size: string;
+  onClick?: () => void;
 };
 
-export function Icon({ icon, number, total, size }: IconProps) {
+export function Icon({ icon, number, total, size, onClick }: IconProps) {
   const rot = number * (360 / total) - 90;
   const style = {
     height: size,
@@ -20,7 +21,7 @@ export function Icon({ icon, number, total, size }: IconProps) {
   };
 
   return (
-    <div style={style} className="icon">
+    <div style={style} onClick={onClick} className="icon">
       {icon}
     </div>
   );

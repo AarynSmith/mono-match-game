@@ -1,12 +1,13 @@
 import "./App.scss";
+
 import { Card } from "./Card";
 import { BigCard } from "./BigCard";
 import { MonoMatchDeck } from "./Deck";
 import { faIcons } from "./SymbolSets";
+import { IconType } from "./Icon";
 
 import React from "react";
-import { library, dom, IconProp } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library, dom, IconName } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { shuffle } from "./utility";
@@ -32,29 +33,24 @@ const colors = [
   "maroon",
 ];
 
-type Icon = { name: string; icon: JSX.Element };
-const icons: Icon[] = shuffle(faIcons).map((v) => ({
+const icons: IconType[] = shuffle(faIcons).map((v) => ({
   name: v,
-  icon: (
-    <FontAwesomeIcon
-      icon={v as IconProp}
-      color={colors[Math.floor(Math.random() * colors.length)]}
-    />
-  ),
+  icon: ["fas", v as IconName],
+  color: colors[Math.floor(Math.random() * colors.length)],
 }));
 
 type AppProps = {};
 type AppState = {
-  CardA: Icon[];
-  CardB: Icon[];
+  CardA: IconType[];
+  CardB: IconType[];
   Match: string;
 };
 class App extends React.Component<AppProps, AppState> {
-  deck: MonoMatchDeck<Icon>;
+  deck: MonoMatchDeck<IconType>;
   constructor(props: AppProps) {
     super(props);
     this.deck = new MonoMatchDeck({
-      order: 5,
+      order: 9,
       symbols: icons,
       shuffle: true,
     });
@@ -93,9 +89,11 @@ class App extends React.Component<AppProps, AppState> {
       if (!CardB) {
         console.error(Error("Missing Cards in Deck"));
       }
-      const Match =
-        CardA?.find((v) => CardB?.map((v) => v.name).includes(v.name))?.name ||
-        "";
+      const Match = CardA?.find((v) =>
+        CardB?.map((v) => v.name).includes(v.name)
+      )?.name;
+      if (!Match) console.error("No Match found");
+      console.log("Match:", { Match });
       this.setState({
         CardA,
         CardB,

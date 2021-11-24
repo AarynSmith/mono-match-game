@@ -88,5 +88,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    svg {
+      pointer-events: all;
+    }
   }
 }

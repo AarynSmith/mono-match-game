@@ -1,7 +1,7 @@
-import { Icon } from "./Icon";
+import { Icon, IconType } from "./Icon";
 
 type CardProps = {
-  icons: JSX.Element[] | string[] | any[];
+  icons: IconType[];
   match: string;
   onClick: (icon: string, match: string) => void;
 };
@@ -14,10 +14,10 @@ export const BigCard = ({ icons, match, onClick }: CardProps) => {
         <Icon
           onClick={() => onClick(v.name, match)}
           key={i}
-          icon={v.icon}
+          icon={v}
           number={i}
           total={arr.length}
-          size={"3em"}
+          size={"2em"}
         />
       ))}
     </div>

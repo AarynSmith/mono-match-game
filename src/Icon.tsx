@@ -1,5 +1,10 @@
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+export type IconType = { name: string; icon: IconProp; color: string };
+
 type IconProps = {
-  icon: JSX.Element | string;
+  icon: IconType;
   number: number;
   total: number;
   size: string;
@@ -9,20 +14,18 @@ type IconProps = {
 export function Icon({ icon, number, total, size, onClick }: IconProps) {
   const rot = number * (360 / total) - 90;
   const style = {
-    height: size,
-    width: size,
-    fontSize: `calc(${size} * .6)`,
+    fontSize: size,
     transform: [
       `translate(-50%,-50%)`,
       `rotate(${rot}deg)`,
-      `translate(calc(${size} * .75))`,
+      `translate(calc(${size} * 1.25))`,
       `rotate(${-1 * rot}deg)`,
     ].join(" "),
   };
 
   return (
-    <div style={style} onClick={onClick} className="icon">
-      {icon}
+    <div style={style} className="icon">
+      <FontAwesomeIcon icon={icon.icon} onClick={onClick} color={icon.color} />
     </div>
   );
 }

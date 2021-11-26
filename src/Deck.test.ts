@@ -2,7 +2,7 @@ import { MonoMatchDeck } from "./Deck";
 
 test("Monomatch", () => {
   expect(() => new MonoMatchDeck({ order: 10, symbols: [] })).toThrowError(
-    "order must be a power of a prime"
+    "order must be a prime"
   );
   expect(
     () =>
@@ -31,7 +31,7 @@ test("Monomatch", () => {
         order: 4,
         symbols: new Array(21).fill(0).map((_, i) => i),
       })
-  ).not.toThrowError();
+  ).toThrowError();
   expect(
     () =>
       new MonoMatchDeck({
@@ -52,4 +52,30 @@ test("Monomatch", () => {
     symbols: new Array(13).fill(0).map((_, i) => String.fromCharCode(65 + i)),
   });
   expect(o2.cards).toHaveLength(13);
+});
+
+describe("Monomatch - Verify", () => {
+  const orders = [11, 13, 17];
+  const symbols = new Array(1000).fill(0).map((_, i) => i);
+  for (const order of orders) {
+    test(`Verify Order: ${order}`, async () => {
+      const m = new MonoMatchDeck({ order, symbols });
+      expect(m.cards.length).toEqual(order * order + order + 1);
+      for (let a = 0; a < m.cards.length - 1; a++) {
+        for (let b = a + 1; b < m.cards.length; b++) {
+          const CardA = m.cards[a];
+          const CardB = m.cards[b];
+          const sect = new Set([...CardA].filter((x) => new Set(CardB).has(x)));
+          if (sect.size !== 1)
+            console.log({
+              CardA,
+              CardB,
+              length: sect.size,
+              matches: sect,
+            });
+          expect(sect.size).toEqual(1);
+        }
+      }
+    });
+  }
 });

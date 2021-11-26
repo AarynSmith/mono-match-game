@@ -1,32 +1,5 @@
 import { shuffle } from "./utility";
 
-let primes: number[] = [];
-
-const primeSieve = (n: number) => {
-  let prime = Array.from({ length: n + 1 }, (_, i) => true);
-  for (let i = 0; i < n; i++) prime[i] = true;
-  for (let p = 2; p * p <= n; p++) {
-    if (prime[p]) {
-      for (let i = p * 2; i <= n; i += p) prime[i] = false;
-    }
-  }
-  for (let i = 2; i <= n; i++) {
-    if (prime[i]) primes.push(i);
-  }
-};
-
-const powerOfPrime = (n: number) => {
-  for (let ii = 0; ii < primes.length; ii++) {
-    let i = primes[ii];
-    if (n % i === 0) {
-      while (n % i === 0) n /= i;
-      if (n === 1) return true;
-      else return false;
-    }
-  }
-  return false;
-};
-
 const computeDeck = (n: number) => {
   let r = 0;
   const d = new Array(n * n + n + 1).fill(0).map(() => [] as number[]);
@@ -51,6 +24,19 @@ const computeDeck = (n: number) => {
   return d;
 };
 
+function isPrime(n: number) {
+  if (n === 2 || n === 3 || n === 5 || n === 7) {
+    return true;
+  } else if (n < 2 || n % 2 === 0) {
+    return false;
+  } else {
+    for (var i = 3; i <= Math.sqrt(n); i += 2) {
+      if (n % i === 0) return false;
+    }
+    return true;
+  }
+}
+
 export class MonoMatchDeck<T> {
   cards: T[][];
   constructor({
@@ -62,8 +48,8 @@ export class MonoMatchDeck<T> {
     symbols: T[];
     shuffle?: boolean;
   }) {
-    primeSieve(order);
-    if (!powerOfPrime(order)) throw Error("order must be a power of a prime");
+    if (!isPrime(order)) throw Error("order must be a prime");
+
     if (symbols.length < order * order + order + 1)
       throw Error("not enough symbols provided for order");
     this.cards = computeDeck(order).map((card) => {

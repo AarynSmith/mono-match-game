@@ -3,7 +3,7 @@ import "./App.scss";
 import { Card } from "./Card";
 import { BigCard } from "./BigCard";
 import { MonoMatchDeck } from "./Deck";
-import { faIcons } from "./SymbolSets";
+import { faAllIcons } from "./SymbolSets";
 import { IconType } from "./Icon";
 
 import React from "react";
@@ -16,24 +16,18 @@ library.add(fas, fab);
 dom.watch();
 
 const colors = [
-  "red",
-  "green",
-  "orange",
-  "blueviolet",
-  "blue",
-  "cyan",
-  "limegreen",
-  "navy",
-  "tomato",
-  "thistle",
-  "slategray",
-  "sandybrown",
-  "powderblue",
-  "moccasin",
-  "maroon",
+  "#cbff4d",
+  "#afed68",
+  "#93dc84",
+  "#77ca9f",
+  "#5bb9bb",
+  "#3fa7d6",
+  "#89c7e6",
+  "#add7ef",
+  "#d2e7f7",
+  "#f7f7ff",
 ];
-
-const icons: IconType[] = shuffle(faIcons).map((v) => ({
+const icons: IconType[] = shuffle(faAllIcons).map((v) => ({
   name: v,
   icon: ["fas", v as IconName],
   color: colors[Math.floor(Math.random() * colors.length)],
@@ -50,23 +44,21 @@ class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.deck = new MonoMatchDeck({
-      order: 9,
+      order: 11,
       symbols: icons,
       shuffle: true,
     });
 
     const CardA = this.draw();
     const CardB = this.draw();
-    if (!CardA) {
-      console.error(Error("Missing Cards in Deck"));
-    }
-    if (!CardB) {
-      console.error(Error("Missing Cards in Deck"));
-    }
-    const Match =
-      CardA?.find((v) => CardB?.map((v) => v.name).includes(v.name))?.name ||
-      "";
+    if (!CardA) console.error(Error("Missing Cards in Deck"));
+    if (!CardB) console.error(Error("Missing Cards in Deck"));
+    const Match = CardA?.find((v) =>
+      CardB?.map((v) => v.name).includes(v.name)
+    )?.name;
+    if (!Match) console.error("No match");
     this.state = { CardA, CardB, Match } as AppState;
+
     this.handleClick = this.handleClick.bind(this);
   }
   draw() {
@@ -79,21 +71,16 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   handleClick(icon: string, match: string) {
-    console.log("Clicked", { icon, match });
+    console.log("Clicked", { icon });
     if (icon === match) {
       const CardA = this.draw();
       const CardB = this.draw();
-      if (!CardA) {
-        console.error(Error("Missing Cards in Deck"));
-      }
-      if (!CardB) {
-        console.error(Error("Missing Cards in Deck"));
-      }
+      if (!CardA) console.error(Error("Missing Cards in Deck"));
+      if (!CardB) console.error(Error("Missing Cards in Deck"));
       const Match = CardA?.find((v) =>
         CardB?.map((v) => v.name).includes(v.name)
       )?.name;
       if (!Match) console.error("No Match found");
-      console.log("Match:", { Match });
       this.setState({
         CardA,
         CardB,

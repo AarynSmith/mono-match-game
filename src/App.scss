@@ -59,10 +59,16 @@ footer {
     .card {
       $size: min(calc(40vw - 0.5em), 50vh);
       border: solid 1px grey;
-      border-radius: 50%;
       width: $size;
       height: $size;
       position: relative;
+      display: flex;
+      flex-flow: row wrap;
+      flex-grow: 1;
+      align-items: stretch;
+      .icon {
+        width: 33%;
+      }
     }
   }
   .card-container {
@@ -75,16 +81,16 @@ footer {
     .card {
       $card-size: 6em;
       position: relative;
-      border: solid 2px grey;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: stretch;
+      border: solid 1px grey;
       width: $card-size;
       height: $card-size;
-      border-radius: 50%;
     }
   }
   .icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    width: 33%;
     display: flex;
     justify-content: center;
     align-items: center;

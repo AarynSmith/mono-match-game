@@ -6,8 +6,8 @@ type CardProps = {
 
 export const Card = ({ icons }: CardProps) => (
   <div style={{}} className="card">
-    {icons.map((v, i, arr) => (
-      <Icon key={i} icon={v} number={i} total={arr.length} size={"1.25em"} />
+    {icons.map((v, i) => (
+      <Icon key={i} icon={v} size={"1.25em"} />
     ))}
   </div>
 );

@@ -1,6 +1,5 @@
 import "./App.scss";
 
-import { Card } from "./Card";
 import { BigCard } from "./BigCard";
 import { MonoMatchDeck } from "./Deck";
 import { faAllIcons } from "./SymbolSets";
@@ -38,6 +37,9 @@ type AppState = {
   CardA: IconType[];
   CardB: IconType[];
   Match: string;
+  Score: number;
+  ScoreTime: number;
+  StartTime: number;
 };
 class App extends React.Component<AppProps, AppState> {
   deck: MonoMatchDeck<IconType>;
@@ -57,7 +59,14 @@ class App extends React.Component<AppProps, AppState> {
       CardB?.map((v) => v.name).includes(v.name)
     )?.name;
     if (!Match) console.error("No match");
-    this.state = { CardA, CardB, Match } as AppState;
+    this.state = {
+      CardA,
+      CardB,
+      Match,
+      Score: 0,
+      ScoreTime: 0,
+      StartTime: Date.now(),
+    } as AppState;
 
     this.handleClick = this.handleClick.bind(this);
   }
@@ -85,6 +94,9 @@ class App extends React.Component<AppProps, AppState> {
         CardA,
         CardB,
         Match,
+        Score: this.state.Score + 1,
+        ScoreTime: Date.now() - this.state.StartTime,
+        StartTime: Date.now(),
       } as AppState);
     }
   }
@@ -97,6 +109,7 @@ class App extends React.Component<AppProps, AppState> {
           <div className="title">MonolithicsMatch</div>
         </header>
         <div className="game-area">
+          <div className="game-head">Matches Found {this.state.Score}</div>
           <BigCard
             icons={this.state.CardA}
             match={this.state.Match}
@@ -107,11 +120,9 @@ class App extends React.Component<AppProps, AppState> {
             match={this.state.Match}
             onClick={this.handleClick}
           />
-        </div>
-        <div className="card-container">
-          {this.deck.cards.map((v, i) => {
-            return <Card key={i} icons={v} />;
-          })}
+          <div className="game-foot">
+            Last found in {Math.floor(this.state.ScoreTime / 1000)} seconds
+          </div>
         </div>
       </div>
     );

@@ -3,6 +3,10 @@ html {
   color: white;
 }
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding-top: 1em;
   display: flex;
   flex-direction: column;
@@ -31,7 +35,7 @@ footer {
 }
 
 .App {
-  min-height: 100vh;
+  min-height: 80vh;
   font-size: calc(10px + 2vmin);
   display: flex;
   flex-direction: column;
@@ -46,26 +50,41 @@ footer {
     width: 25vh;
   }
   .game-area {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-areas:
+      "g-head g-head g-head"
+      "card-a . card-b"
+      "g-foot g-foot g-foot";
     border: solid 1px lightgrey;
     padding: 1em;
-    margin: 1em;
-    gap: 1em;
-    width: 80vw;
-    height: 50vh;
-    justify-content: center;
-    align-items: center;
+    column-gap: 0.5em;
+    row-gap: 5px;
+    width: min(80vw, 800px);
+    margin-bottom: 1em;
+    .game-head {
+      grid-area: g-head;
+      display: flex;
+      justify-content: center;
+    }
+    .game-foot {
+      grid-area: g-foot;
+      display: flex;
+      justify-content: flex-end;
+      font-size: x-small;
+    }
     .card {
-      $size: min(calc(40vw - 0.5em), 50vh);
+      aspect-ratio: 1;
       border: solid 1px grey;
-      width: $size;
-      height: $size;
-      position: relative;
       display: flex;
       flex-flow: row wrap;
       flex-grow: 1;
       align-items: stretch;
+      &:nth-of-type(1) {
+        grid-area: card-a;
+      }
+      &:nth-of-type(2) {
+        grid-area: card-b;
+      }
       .icon {
         width: 33%;
       }
